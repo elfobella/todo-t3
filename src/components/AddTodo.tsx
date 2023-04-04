@@ -3,7 +3,7 @@ import { api } from "y/utils/api";
 
 const AddTodo = () => {
   const trpc = api.useContext();
-  const { mutate: addTodo } = api.todo.create.useMutation({
+  const { mutate: addTodo, isLoading } = api.todo.create.useMutation({
     onSuccess: async () => {
       return await trpc.todo.getAll.invalidate();
     },
@@ -25,13 +25,16 @@ const AddTodo = () => {
         className="border-b-2 border-gray-800 bg-transparent p-1 outline-none dark:border-stone-100"
       />
       <button
+        disabled={isLoading}
         onClick={() => {
           setInputs("");
           addTodo({ title: inputs, isDone: false });
         }}
-        className="rounded bg-gray-800 px-4 py-1 text-stone-100 dark:bg-stone-100 dark:text-gray-800"
+        className={`rounded ${
+          isLoading ? "bg-gray-600" : ""
+        } bg-gray-800 px-4 py-1 text-stone-100 outline-none dark:bg-stone-100 dark:text-gray-800`}
       >
-        Add
+        {isLoading ? "Adding" : "Add"}
       </button>
     </div>
   );
