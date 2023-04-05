@@ -3,6 +3,7 @@ import { reverse } from "dns";
 import React, { useEffect, useRef, useState } from "react";
 import { MdDelete, MdDone, MdClose } from "react-icons/md";
 import { api } from "y/utils/api";
+import LoadingSpinner from "./LoadingSpinner";
 type TodoProps = {
   todo: Todo;
 };
@@ -15,11 +16,12 @@ const EachTodo = ({ todo }: TodoProps) => {
   const [isCreated, setIsCreated] = useState(true);
   const CREATED_CLASS = "scale-75 -mb-[calc(48px+12px)] opacity-5";
   const CREATED_DELAY = 0;
-  const { mutate: updateTodo, isLoading } = api.todo.update.useMutation({
-    onSuccess: async () => {
-      return await trpc.todo.getAll.invalidate();
-    },
-  });
+  const { mutate: updateTodo, isLoading: updateLoading } =
+    api.todo.update.useMutation({
+      onSuccess: async () => {
+        return await trpc.todo.getAll.invalidate();
+      },
+    });
   const { mutate: deleteTodo } = api.todo.delete.useMutation({
     onSuccess: async () => {
       return await trpc.todo.getAll.invalidate();
@@ -27,6 +29,12 @@ const EachTodo = ({ todo }: TodoProps) => {
   });
   const taskRef = useRef(null);
   const editRef = useRef<HTMLInputElement>(null);
+
+  const editValidate = () => {
+    if (editTitle !== title) {
+      updateTodo({ title: editTitle, id });
+    }
+  };
 
   useEffect(() => {
     setTimeout(() => {
@@ -51,16 +59,15 @@ const EachTodo = ({ todo }: TodoProps) => {
     `}
     >
       <div
-        className={`w-[250px] rounded bg-gray-800 p-2 text-stone-100  transition duration-100 dark:bg-stone-100 dark:text-gray-800`}
+        className={`w-[250px] rounded bg-gray-800  p-2 text-stone-100  transition duration-100 dark:bg-stone-100 dark:text-gray-800`}
       >
         <div className=" ">
-          <div
-            onMouseLeave={() => setIsEditing(false)}
-            className="flex items-center"
-          >
+          <div className="flex items-center">
             <span
               onClick={() => {
-                setIsEditing(true);
+                if (!updateLoading) {
+                  setIsEditing(true);
+                }
               }}
               className={`${
                 isDone ? "line-through" : ""
@@ -72,40 +79,49 @@ const EachTodo = ({ todo }: TodoProps) => {
                     ref={editRef}
                     onKeyDown={(e) =>
                       e.key === "Enter"
-                        ? (updateTodo({ title: editTitle, id }),
-                          setIsEditing(false))
+                        ? (editValidate(), setIsEditing(false))
                         : ""
                     }
-                    className="bg-stone-300"
+                    className="flex-1 bg-gray-700 outline-none dark:bg-stone-300"
                     type="text"
                     value={editTitle}
                     onChange={(e) => setEditTitle(e.target.value)}
                   />
-                  <div className="flex">
+                  <div className="flex px-2">
                     <MdDone
                       onClick={(e) => {
                         e.stopPropagation();
                         setIsEditing(false);
-                        updateTodo({ title: editTitle, id });
+                        editValidate();
                       }}
-                      className="cursor-pointer rounded-full p-[1px] hover:bg-stone-200"
+                      className="h-5 w-5 cursor-pointer rounded-full p-0.5  hover:bg-gray-700 dark:hover:bg-stone-200"
                     />
                     <MdClose
                       onClick={(e) => {
                         e.stopPropagation();
                         setIsEditing(false);
                       }}
-                      className="cursor-pointer rounded-full p-[1px] hover:bg-stone-200"
+                      className="h-5 w-5  cursor-pointer rounded-full p-0.5 hover:bg-gray-700 dark:hover:bg-stone-200"
                     />
                   </div>
                 </div>
               ) : (
-                title
+                <div>
+                  <span
+                    className={`${
+                      updateLoading ? "text-gray-500" : ""
+                    } flex items-center`}
+                  >
+                    {title}
+                  </span>
+                </div>
               )}
             </span>
-            <button onClick={() => deleteTodo(id)}>
-              <MdDelete className="text-red-500" />
-            </button>
+            {!isEditing && (
+              <button onClick={() => deleteTodo(id)}>
+                <MdDelete className="text-red-500" />
+              </button>
+            )}
           </div>
         </div>
       </div>
