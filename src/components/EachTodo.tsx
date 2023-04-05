@@ -1,9 +1,7 @@
-import { Todo } from "@prisma/client";
-import { reverse } from "dns";
+import type { Todo } from "@prisma/client";
 import React, { useEffect, useRef, useState } from "react";
 import { MdDelete, MdDone, MdClose } from "react-icons/md";
 import { api } from "y/utils/api";
-import LoadingSpinner from "./LoadingSpinner";
 type TodoProps = {
   todo: Todo;
 };
