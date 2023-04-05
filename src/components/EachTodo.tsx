@@ -20,11 +20,12 @@ const EachTodo = ({ todo }: TodoProps) => {
         return await trpc.todo.getAll.invalidate();
       },
     });
-  const { mutate: deleteTodo } = api.todo.delete.useMutation({
-    onSuccess: async () => {
-      return await trpc.todo.getAll.invalidate();
-    },
-  });
+  const { mutate: deleteTodo, isLoading: deleteLoading } =
+    api.todo.delete.useMutation({
+      onSuccess: async () => {
+        return await trpc.todo.getAll.invalidate();
+      },
+    });
   const taskRef = useRef(null);
   const editRef = useRef<HTMLInputElement>(null);
 
@@ -57,14 +58,17 @@ const EachTodo = ({ todo }: TodoProps) => {
     `}
     >
       <div
-        className={`w-[250px] rounded bg-gray-800  p-2 text-stone-100  transition duration-100 dark:bg-stone-100 dark:text-gray-800`}
+        className={`w-[250px] rounded ${
+          deleteLoading ? "bg-stone-400" : "bg-gray-800 dark:bg-stone-100"
+        }   p-2 text-stone-100  transition   duration-100  dark:text-gray-800`}
       >
         <div className=" ">
           <div className="flex items-center">
             <span
               onClick={() => {
-                if (!updateLoading) {
+                if (!updateLoading && !deleteLoading) {
                   setIsEditing(true);
+                  setEditTitle(title);
                 }
               }}
               className={`${
@@ -115,7 +119,7 @@ const EachTodo = ({ todo }: TodoProps) => {
                 </div>
               )}
             </span>
-            {!isEditing && (
+            {!isEditing && !deleteLoading && (
               <button onClick={() => deleteTodo(id)}>
                 <MdDelete className="text-red-500" />
               </button>

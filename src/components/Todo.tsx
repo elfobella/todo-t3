@@ -4,7 +4,7 @@ import TodoList from "./TodoList";
 
 const Todo = () => {
   return (
-    <div>
+    <div className="flex max-w-3xl flex-col items-center ">
       <AddTodo />
       <TodoList />
     </div>
