@@ -26,4 +26,17 @@ export const todoRouter = createTRPCRouter({
       },
     });
   }),
+
+  update: publicProcedure
+    .input(z.object({ title: z.string(), id: z.string() }))
+    .mutation(async ({ ctx, input: { title, id } }) => {
+      return await ctx.prisma.todo.update({
+        where: {
+          id,
+        },
+        data: {
+          title,
+        },
+      });
+    }),
 });
