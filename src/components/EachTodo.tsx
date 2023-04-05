@@ -10,10 +10,12 @@ const EachTodo = ({ todo }: TodoProps) => {
   const trpc = api.useContext();
   const [isEditing, setIsEditing] = useState(false);
   const { isDone, title, id } = todo;
+  const [isChecked, setIsChecked] = useState(false);
   const [editTitle, setEditTitle] = useState(title);
   const [isCreated, setIsCreated] = useState(true);
   const CREATED_CLASS = "scale-75 -mb-[calc(48px+12px)] opacity-5";
   const CREATED_DELAY = 0;
+  const CHECKED_CLASS = "w-full opacity-50";
   const { mutate: updateTodo, isLoading: updateLoading } =
     api.todo.update.useMutation({
       onSuccess: async () => {
@@ -26,6 +28,13 @@ const EachTodo = ({ todo }: TodoProps) => {
         return await trpc.todo.getAll.invalidate();
       },
     });
+
+  const { mutate: checkTodo } = api.todo.check.useMutation({
+    onSettled: async () => {
+      return await trpc.todo.getAll.invalidate();
+    },
+  });
+
   const taskRef = useRef(null);
   const editRef = useRef<HTMLInputElement>(null);
 
@@ -34,6 +43,8 @@ const EachTodo = ({ todo }: TodoProps) => {
       updateTodo({ title: editTitle, id });
     }
   };
+
+  console.log("checked:", isChecked);
 
   useEffect(() => {
     setTimeout(() => {
@@ -64,17 +75,7 @@ const EachTodo = ({ todo }: TodoProps) => {
       >
         <div className=" ">
           <div className="flex items-center">
-            <span
-              onClick={() => {
-                if (!updateLoading && !deleteLoading) {
-                  setIsEditing(true);
-                  setEditTitle(title);
-                }
-              }}
-              className={`${
-                isDone ? "line-through" : ""
-              } flex-1 overflow-hidden overflow-ellipsis`}
-            >
+            <span className={` flex-1 overflow-hidden overflow-ellipsis`}>
               {isEditing ? (
                 <div className="flex items-center ">
                   <input
@@ -108,18 +109,36 @@ const EachTodo = ({ todo }: TodoProps) => {
                   </div>
                 </div>
               ) : (
-                <div>
+                <div className="flex items-center space-x-2 overflow-hidden overflow-ellipsis">
+                  <input
+                    type="checkbox"
+                    checked={isDone}
+                    onClick={() => {
+                      checkTodo({
+                        id,
+                        isDone: !isDone,
+                      });
+                    }}
+                  />
                   <span
+                    onClick={() => {
+                      if (!updateLoading && !deleteLoading && !isDone) {
+                        setIsEditing(true);
+                        setEditTitle(title);
+                      }
+                    }}
                     className={`${
                       updateLoading ? "text-gray-500" : ""
-                    } flex items-center`}
+                    } relative after:absolute after:left-0 after:top-[50%] after:h-[3px] after:duration-300 ${
+                      isDone ? "text-stone-400 after:w-full" : "after:w-0"
+                    }  text-lg after:bg-blue-500 after:transition-all after:content-[""] `}
                   >
                     {title}
                   </span>
                 </div>
               )}
             </span>
-            {!isEditing && !deleteLoading && (
+            {!isEditing && !deleteLoading && !isDone && (
               <button onClick={() => deleteTodo(id)}>
                 <MdDelete className="text-red-500" />
               </button>

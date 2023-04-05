@@ -25,7 +25,7 @@ const AddTodo = () => {
         className="border-b-2 border-gray-800 bg-transparent p-1 outline-none dark:border-stone-100"
       />
       <button
-        disabled={isLoading}
+        disabled={isLoading || !inputs}
         onClick={() => {
           setInputs("");
           addTodo({ title: inputs, isDone: false });
