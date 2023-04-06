@@ -1,8 +1,5 @@
 import { type NextPage } from "next";
 import Head from "next/head";
-import Link from "next/link";
-import CategoryList from "y/components/CategoryList";
-import CreateCategory from "y/components/CreateCategory";
 import ThemeSwitcher from "y/components/ThemeSwitcher";
 import Todo from "y/components/Todo";
 
