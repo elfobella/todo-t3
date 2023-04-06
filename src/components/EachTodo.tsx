@@ -69,7 +69,7 @@ const EachTodo = ({ todo }: TodoProps) => {
     `}
     >
       <div
-        className={`w-[250px] rounded ${
+        className={`w-[280px] rounded ${
           deleteLoading ? "bg-stone-400" : "bg-gray-800 dark:bg-stone-100"
         }   p-2 text-stone-100  transition   duration-100  dark:text-gray-800`}
       >
@@ -77,7 +77,7 @@ const EachTodo = ({ todo }: TodoProps) => {
           <div className="flex items-center">
             <span className={` flex-1 overflow-hidden overflow-ellipsis`}>
               {isEditing ? (
-                <div className="flex items-center ">
+                <div className="flex items-center text-lg ">
                   <input
                     ref={editRef}
                     onKeyDown={(e) =>
@@ -90,7 +90,7 @@ const EachTodo = ({ todo }: TodoProps) => {
                     value={editTitle}
                     onChange={(e) => setEditTitle(e.target.value)}
                   />
-                  <div className="flex px-2">
+                  <div className="px1 flex ">
                     <MdDone
                       onClick={(e) => {
                         e.stopPropagation();
@@ -112,6 +112,7 @@ const EachTodo = ({ todo }: TodoProps) => {
                 <div className="flex items-center space-x-2 overflow-hidden overflow-ellipsis">
                   <input
                     type="checkbox"
+                    className="outline-none"
                     checked={isDone}
                     onClick={() => {
                       checkTodo({
@@ -131,7 +132,7 @@ const EachTodo = ({ todo }: TodoProps) => {
                       updateLoading ? "text-gray-500" : ""
                     } relative after:absolute after:left-0 after:top-[50%] after:h-[3px] after:duration-300 ${
                       isDone ? "text-stone-400 after:w-full" : "after:w-0"
-                    }  text-lg after:bg-blue-500 after:transition-all after:content-[""] `}
+                    }  overflow-hidden overflow-ellipsis text-lg after:bg-blue-500 after:transition-all after:content-[""] `}
                   >
                     {title}
                   </span>

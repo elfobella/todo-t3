@@ -11,7 +11,7 @@ const AddTodo = () => {
   const [inputs, setInputs] = useState("");
 
   return (
-    <div className="flex space-x-2">
+    <div className="flex w-[280px] space-x-2">
       <input
         onKeyDown={(e) =>
           e.key === "Enter"
@@ -22,7 +22,7 @@ const AddTodo = () => {
         value={inputs}
         onChange={(e) => setInputs(e.target.value)}
         placeholder="Type"
-        className="border-b-2 border-gray-800 bg-transparent p-1 outline-none dark:border-stone-100"
+        className="flex-1 border-b-2 border-gray-800 bg-transparent p-1 outline-none dark:border-stone-100"
       />
       <button
         disabled={isLoading || !inputs}
