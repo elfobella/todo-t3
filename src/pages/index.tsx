@@ -3,8 +3,6 @@ import Head from "next/head";
 import Layout from "y/components/Layout";
 import Todo from "y/components/Todo";
 
-import { api } from "y/utils/api";
-
 const Home: NextPage = () => {
   return (
     <>
