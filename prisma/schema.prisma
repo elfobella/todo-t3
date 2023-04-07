@@ -16,11 +16,13 @@ model Todo {
     title String @db.VarChar(255)
     isDone Boolean @default(false)
     createdAt DateTime @default(now())
+    category Category[]
 }
 
 model Category {
   id String @id @default(cuid())
   title String @db.VarChar(255)
   createdAt DateTime @default(now())
+  todo Todo[]
 
 }
