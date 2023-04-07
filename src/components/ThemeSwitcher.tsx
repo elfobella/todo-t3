@@ -28,7 +28,7 @@ const ThemeSwitcher = () => {
     <div>
       <button
         onClick={() => setIsDarkMode(!isDarkMode)}
-        className="flex items-center rounded-full bg-gray-800 p-2 text-stone-200 focus:outline-none dark:bg-stone-100 dark:text-gray-800"
+        className=" flex items-center rounded-full bg-gray-800 p-2 text-stone-200 focus:outline-none dark:bg-stone-100 dark:text-gray-800"
       >
         {isDarkMode ? (
           <BsSun className="h-5 w-5" />

@@ -8,12 +8,33 @@ export const todoRouter = createTRPCRouter({
   }),
 
   create: publicProcedure
-    .input(z.object({ title: z.string().min(1).max(220), isDone: z.boolean() }))
-    .mutation(async ({ ctx, input: { isDone, title } }) => {
+    .input(
+      z.object({
+        title: z.string().min(1).max(220),
+        category: z.string().min(1).max(30),
+        isDone: z.boolean(),
+      })
+    )
+    .mutation(async ({ ctx, input: { isDone, title, category } }) => {
       return await ctx.prisma.todo.create({
         data: {
           title,
           isDone,
+          category: {
+            create: {
+              title: category,
+            },
+          },
+        },
+      });
+    }),
+
+  filteredTodo: publicProcedure
+    .input(z.string())
+    .query(async ({ ctx, input }) => {
+      return await ctx.prisma.todo.findFirst({
+        where: {
+          title: input,
         },
       });
     }),
