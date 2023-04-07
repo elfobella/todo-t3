@@ -9,14 +9,26 @@ type CategoryProps = {
 };
 
 const Category = ({ category }: CategoryProps) => {
-  const { title } = category;
+  const { title, id } = category;
+  const trpc = api.useContext();
+  const { mutate: deleteCategory } = api.category.delete.useMutation({
+    onSettled: async () => {
+      return await trpc.category.getAll.invalidate();
+    },
+  });
 
   return (
     <div className="">
-      <Link className="" href={`/list/${title}`}>
+      <Link className="" href={`/list/${id}`}>
         <div className="group flex cursor-pointer items-center rounded px-4 py-2 hover:bg-gray-300 dark:hover:bg-gray-700">
           <span className="flex-1">{title}</span>
-          <button className="hidden group-hover:inline-block">
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              deleteCategory(id);
+            }}
+            className="hidden rounded-full p-1 transition hover:bg-gray-500/70 group-hover:inline-block"
+          >
             <MdDelete className="text-red-500" />
           </button>
         </div>

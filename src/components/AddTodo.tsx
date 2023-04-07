@@ -15,8 +15,7 @@ const AddTodo = () => {
       <input
         onKeyDown={(e) =>
           e.key === "Enter"
-            ? (setInputs(""),
-              addTodo({ title: inputs, isDone: false, category: "All" }))
+            ? (setInputs(""), addTodo({ title: inputs, isDone: false }))
             : ""
         }
         type="text"
@@ -29,7 +28,7 @@ const AddTodo = () => {
         disabled={isLoading || !inputs}
         onClick={() => {
           setInputs("");
-          addTodo({ title: inputs, isDone: false, category: "All" });
+          addTodo({ title: inputs, isDone: false });
         }}
         className={`rounded ${
           isLoading ? "bg-gray-600" : ""

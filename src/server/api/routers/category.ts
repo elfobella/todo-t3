@@ -7,6 +7,22 @@ export const categoryRouter = createTRPCRouter({
     return ctx.prisma.category.findMany();
   }),
 
+  getOne: publicProcedure.input(z.string()).query(async ({ ctx, input }) => {
+    return await ctx.prisma.category.findFirst({
+      where: {
+        id: input,
+      },
+    });
+  }),
+
+  delete: publicProcedure.input(z.string()).mutation(async ({ ctx, input }) => {
+    return await ctx.prisma.category.delete({
+      where: {
+        id: input,
+      },
+    });
+  }),
+
   create: publicProcedure.input(z.string()).mutation(async ({ ctx, input }) => {
     return await ctx.prisma.category.create({
       data: {
