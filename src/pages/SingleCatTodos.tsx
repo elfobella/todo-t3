@@ -1,8 +1,8 @@
 import React from "react";
-import type { EachCategoryTodo } from "y/types";
+import type { Todo } from "y/types";
 
 type TodoProps = {
-  todo: EachCategoryTodo;
+  todo: Todo;
 };
 
 const SingleCatTodos = ({ todo }: TodoProps) => {
