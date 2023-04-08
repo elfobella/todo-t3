@@ -30,11 +30,6 @@ const CategoryPage = () => {
       console.error("Category not defined.");
     }
   };
-  const { mutate: checkTodo } = api.todo.check.useMutation({
-    onSettled: async () => {
-      return await trpc.todo.getAll.invalidate();
-    },
-  });
 
   const { data: todos } = api.todo.filteredTodo.useQuery(catId);
 

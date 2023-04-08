@@ -20,6 +20,8 @@ const CategoryTodo = ({ todo }: CatProps) => {
     },
   });
 
+  console.log("todo is:", todo);
+
   return (
     <div>
       <div className="group flex items-center space-x-2 rounded p-2 hover:bg-stone-500/50">
