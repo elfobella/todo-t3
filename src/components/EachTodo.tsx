@@ -10,6 +10,7 @@ const EachTodo = ({ todo }: TodoProps) => {
   const trpc = api.useContext();
   const [isEditing, setIsEditing] = useState(false);
   const { isDone, title, id } = todo;
+
   const [editTitle, setEditTitle] = useState(title);
   const [isCreated, setIsCreated] = useState(true);
   const CREATED_CLASS = "scale-75 -mb-[calc(48px+12px)] opacity-5";

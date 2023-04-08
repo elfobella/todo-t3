@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { BsPlus } from "react-icons/bs";
 import { api } from "y/utils/api";
 
