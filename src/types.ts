@@ -1,5 +1,5 @@
-import { inferRouterOutputs } from "@trpc/server";
-import { AppRouter } from "./server/api/root";
+import type { inferRouterOutputs } from "@trpc/server";
+import type { AppRouter } from "./server/api/root";
 
 type RouterOutputs = inferRouterOutputs<AppRouter>;
 type allTodoOutput = RouterOutputs["todo"]["getAll"];
@@ -8,6 +8,6 @@ type allCategoryTodos = RouterOutputs["todo"]["filteredTodo"];
 
 export type Todo = allTodoOutput[number];
 
-export type CategoryTodo = allCategoryTodos[number];
+export type EachCategoryTodo = allCategoryTodos[number];
 
 export type Cat = allCategoryOutput[number];
