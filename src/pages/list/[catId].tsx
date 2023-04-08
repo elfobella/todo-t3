@@ -1,9 +1,8 @@
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-import { MdArrowUpward } from "react-icons/md";
+import { MdArrowUpward, MdDelete } from "react-icons/md";
 import { api } from "y/utils/api";
 import Layout from "../Layout";
-import SingleCatTodos from "../SingleCatTodos";
 
 const CategoryPage = () => {
   const router = useRouter();
@@ -14,6 +13,18 @@ const CategoryPage = () => {
   const { data: singleCat } = api.category.getOne.useQuery(catId);
   const { mutate: addTodo, isLoading } = api.category.createTodo.useMutation({
     onSuccess: async () => {
+      return await trpc.todo.filteredTodo.invalidate();
+    },
+  });
+
+  const { mutate: deleteTodo } = api.todo.delete.useMutation({
+    onSettled: async () => {
+      return await trpc.todo.filteredTodo.invalidate();
+    },
+  });
+
+  const { mutate: checkTodo } = api.todo.check.useMutation({
+    onSettled: async () => {
       return await trpc.todo.filteredTodo.invalidate();
     },
   });
@@ -40,7 +51,35 @@ const CategoryPage = () => {
         <div className=" crollbar mt-4 flex h-[80%] max-h-[450px] w-[420px] flex-1 flex-col overflow-y-scroll rounded-t-lg bg-gray-800 p-4 text-stone-200 scrollbar-thin scrollbar-track-gray-800 scrollbar-thumb-gray-600 dark:bg-gray-700  dark:scrollbar-track-gray-700">
           <div>
             {todos?.map((todo) => (
-              <SingleCatTodos key={todo.id} todo={todo} />
+              <div
+                className="group relative flex items-center space-x-2 rounded p-2 hover:bg-gray-600"
+                key={todo.id}
+              >
+                <input
+                  type="checkbox"
+                  onChange={() =>
+                    checkTodo({ id: todo.id, isDone: !todo.isDone })
+                  }
+                  checked={todo.isDone}
+                  name=""
+                  id=""
+                />
+                <div
+                  className={`relative flex-1 after:absolute after:left-0 after:top-[50%] after:h-[3px] ${
+                    todo.isDone ? "text-stone-400 after:w-full" : "after:w-0"
+                  }  overflow-hidden overflow-ellipsis text-lg after:bg-blue-500 after:transition-all after:content-[""] `}
+                >
+                  <p>{todo.title}</p>
+                </div>
+                <button
+                  onClick={() => deleteTodo(todo.id)}
+                  className={`${
+                    todo.isDone ? "inline-block" : "hidden"
+                  } rounded-full p-1 group-hover:inline-block`}
+                >
+                  <MdDelete />
+                </button>
+              </div>
             ))}
           </div>
         </div>
