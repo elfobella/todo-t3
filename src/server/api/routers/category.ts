@@ -36,11 +36,7 @@ export const categoryRouter = createTRPCRouter({
       return await ctx.prisma.todo.create({
         data: {
           title: title,
-          category: {
-            connect: {
-              id: categoryId,
-            },
-          },
+          categoryId: categoryId,
         },
       });
     }),
