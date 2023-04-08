@@ -6,8 +6,7 @@ type allTodoOutput = RouterOutputs["todo"]["getAll"];
 type allCategoryOutput = RouterOutputs["category"]["getAll"];
 type allCategoryTodos = RouterOutputs["todo"]["filteredTodo"];
 
+export type Cat = allCategoryOutput[number];
 export type Todo = allTodoOutput[number];
 
 export type EachCategoryTodo = allCategoryTodos[number];
-
-export type Cat = allCategoryOutput[number];
