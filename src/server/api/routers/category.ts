@@ -18,7 +18,7 @@ export const categoryRouter = createTRPCRouter({
   createTodo: publicProcedure
     .input(z.object({ title: z.string().min(1), id: z.string() }))
     .mutation(async ({ ctx, input: { id, title } }) => {
-      return await ctx.prisma.category.update({
+      const updatedCategory = await ctx.prisma.category.update({
         where: {
           id,
         },
@@ -29,7 +29,11 @@ export const categoryRouter = createTRPCRouter({
             },
           },
         },
+        include: {
+          todo: true,
+        },
       });
+      return updatedCategory;
     }),
 
   delete: publicProcedure.input(z.string()).mutation(async ({ ctx, input }) => {
