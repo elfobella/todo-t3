@@ -1,7 +1,7 @@
 import React from "react";
-import CategoryList from "y/components/CategoryList";
-import CreateCategory from "y/components/CreateCategory";
-import ThemeSwitcher from "y/components/ThemeSwitcher";
+import CategoryList from "y/pages/components/CategoryList";
+import CreateCategory from "y/pages/components/CreateCategory";
+import ThemeSwitcher from "y/pages/components/ThemeSwitcher";
 
 type ChildrenProps = {
   children: React.ReactNode;

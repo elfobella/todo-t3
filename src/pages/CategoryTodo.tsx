@@ -19,16 +19,17 @@ const CategoryTodo = ({ todo }: CatProps) => {
       return await trpc.todo.filteredTodo.invalidate();
     },
   });
+
   return (
     <div>
       <div className="group flex items-center space-x-2 rounded p-2 hover:bg-stone-500/50">
         <div className="flex h-5 items-center">
           <input
-            defaultChecked={todo.isDone}
+            defaultChecked={todo?.isDone}
             onClick={() => {
               checkTodo({
-                id: todo.id,
-                isDone: !todo.isDone,
+                id: todo?.id,
+                isDone: !todo?.isDone,
               });
             }}
             id="terms"
@@ -39,7 +40,7 @@ const CategoryTodo = ({ todo }: CatProps) => {
         <div className=" flex flex-1 items-center justify-center">
           <div
             className={` ${
-              todo.isDone ? "text-stone-400 after:w-full" : "after:w-0"
+              todo?.isDone ? "text-stone-400 after:w-full" : "after:w-0"
             } relative  flex-1 font-semibold after:absolute after:top-[50%] after:block after:h-[2px] after:bg-blue-500 after:transition-all after:duration-200`}
           >
             <span>{todo.title}</span>
@@ -47,7 +48,7 @@ const CategoryTodo = ({ todo }: CatProps) => {
           <button
             onClick={() => deleteTodo(todo.id)}
             className={` rounded-full p-1 group-hover:block ${
-              todo.isDone ? "block" : "hidden"
+              todo?.isDone ? "block" : "hidden"
             }`}
           >
             <MdDelete />
