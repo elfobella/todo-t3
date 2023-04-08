@@ -47,7 +47,7 @@ const CategoryPage = () => {
               if (singleCat && singleCat.title) {
                 addTodo({
                   title: text,
-                  categoryId: singleCat.id,
+                  category: { id: singleCat.id },
                 });
               } else {
                 // Kategori tanımlı değilse, hata mesajı gösterilebilir veya farklı bir değer atanabilir.
