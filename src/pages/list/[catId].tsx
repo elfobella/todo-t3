@@ -11,37 +11,50 @@ const CategoryPage = () => {
   const catId =
     typeof router.query.catId === "string" ? router.query.catId : "";
   const { data: singleCat } = api.category.getOne.useQuery(catId);
-  const { mutate: addTodo, isLoading } = api.todo.create.useMutation({
+  const { mutate: addTodo, isLoading } = api.category.createTodo.useMutation({
     onSuccess: async () => {
-      return await trpc.todo.getAll.invalidate();
+      return await trpc.todo.filteredTodo.invalidate();
     },
   });
 
+  const { data: todos } = api.todo.filteredTodo.useQuery(catId);
+
   return (
     <Layout>
-      <div className="flex flex-col justify-between">
-        <div className="flex ">
-          <p className="rounded-lg bg-gray-900/70 px-4 py-2">
-            <span>{singleCat?.title}</span>
-          </p>
+      <div className="relative">
+        <div>
+          <p className="text-lg font-semibold">{singleCat?.title}</p>
         </div>
-        <div className="flex items-center  space-x-2 ">
+        <div className="my-4">
+          {todos?.map((todo) => (
+            <div key={todo.id}>{todo.title}</div>
+          ))}
+        </div>
+        <div className="absolute bottom-0 flex items-center space-x-2">
           <input
             type="text"
             value={text}
             onChange={(e) => setText(e.target.value)}
             placeholder="Add"
-            className="flex-1 rounded-lg bg-stone-500/50 p-2 outline-none"
+            className="flex-1 rounded-lg bg-gray-800 p-2 text-stone-200 outline-none dark:bg-stone-500/50"
           />
           <button
             disabled={isLoading || !text}
             onClick={() => {
               setText("");
-              addTodo({ title: text, isDone: false });
+              if (singleCat && singleCat.title) {
+                addTodo({
+                  title: text,
+                  id: singleCat.id,
+                });
+              } else {
+                // Kategori tanımlı değilse, hata mesajı gösterilebilir veya farklı bir değer atanabilir.
+                console.error("Category not defined.");
+              }
             }}
             className={`rounded-full ${
-              isLoading ? "bg-stone-500/50" : ""
-            } cursor-pointer bg-stone-500 p-[10px] transition duration-200 hover:bg-blue-500 `}
+              isLoading ? "dark:bg-stone-500/50" : ""
+            } cursor-pointer bg-gray-800 p-[10px] text-stone-200 transition duration-200 hover:bg-blue-500 dark:bg-stone-500 `}
           >
             <MdArrowUpward />
           </button>

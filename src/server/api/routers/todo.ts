@@ -7,23 +7,6 @@ export const todoRouter = createTRPCRouter({
     return ctx.prisma.todo.findMany();
   }),
 
-  createCategory: publicProcedure
-    .input(z.object({ id: z.string(), title: z.string().min(1) }))
-    .mutation(async ({ ctx, input: { id, title } }) => {
-      return await ctx.prisma.todo.update({
-        where: {
-          id,
-        },
-        data: {
-          category: {
-            create: {
-              title,
-            },
-          },
-        },
-      });
-    }),
-
   create: publicProcedure
     .input(
       z.object({
@@ -43,9 +26,13 @@ export const todoRouter = createTRPCRouter({
   filteredTodo: publicProcedure
     .input(z.string())
     .query(async ({ ctx, input }) => {
-      return await ctx.prisma.todo.findFirst({
+      return await ctx.prisma.todo.findMany({
         where: {
-          title: input,
+          category: {
+            every: {
+              id: input,
+            },
+          },
         },
       });
     }),

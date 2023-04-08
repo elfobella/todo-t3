@@ -10,12 +10,10 @@ const EachTodo = ({ todo }: TodoProps) => {
   const trpc = api.useContext();
   const [isEditing, setIsEditing] = useState(false);
   const { isDone, title, id } = todo;
-  const [isChecked, setIsChecked] = useState(false);
   const [editTitle, setEditTitle] = useState(title);
   const [isCreated, setIsCreated] = useState(true);
   const CREATED_CLASS = "scale-75 -mb-[calc(48px+12px)] opacity-5";
   const CREATED_DELAY = 0;
-  const CHECKED_CLASS = "w-full opacity-50";
   const { mutate: updateTodo, isLoading: updateLoading } =
     api.todo.update.useMutation({
       onSuccess: async () => {
@@ -43,8 +41,6 @@ const EachTodo = ({ todo }: TodoProps) => {
       updateTodo({ title: editTitle, id });
     }
   };
-
-  console.log("checked:", isChecked);
 
   useEffect(() => {
     setTimeout(() => {

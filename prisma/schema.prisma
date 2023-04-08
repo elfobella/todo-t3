@@ -16,7 +16,10 @@ model Todo {
     title String @db.VarChar(255)
     isDone Boolean @default(false)
     createdAt DateTime @default(now())
+    categoryId String
     category Category[]
+
+    @@index([categoryId])
 }
 
 model Category {
