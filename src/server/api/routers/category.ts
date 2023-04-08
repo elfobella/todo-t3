@@ -29,17 +29,12 @@ export const categoryRouter = createTRPCRouter({
           title: title,
           isDone: isDone,
           categoryId: categoryId,
-          category: {
-            connect: {
-              id: categoryId,
-            },
-          },
         },
       });
     }),
 
   delete: publicProcedure.input(z.string()).mutation(async ({ ctx, input }) => {
-    return await ctx.prisma.category.delete({
+    return await ctx.prisma.category.deleteMany({
       where: {
         id: input,
       },

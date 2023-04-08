@@ -12,17 +12,13 @@ export const todoRouter = createTRPCRouter({
     .query(async ({ ctx, input }) => {
       return await ctx.prisma.todo.findMany({
         where: {
-          category: {
-            some: {
-              id: input,
-            },
-          },
+          categoryId: input,
         },
       });
     }),
 
   delete: publicProcedure.input(z.string()).mutation(async ({ ctx, input }) => {
-    return await ctx.prisma.todo.delete({
+    return await ctx.prisma.todo.deleteMany({
       where: {
         id: input,
       },
@@ -47,11 +43,7 @@ export const todoRouter = createTRPCRouter({
     .query(async ({ ctx, input }) => {
       return await ctx.prisma.todo.findMany({
         where: {
-          category: {
-            some: {
-              id: input,
-            },
-          },
+          categoryId: input,
         },
       });
     }),

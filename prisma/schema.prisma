@@ -12,20 +12,22 @@ generator client {
 }
 
 model Todo {
-    id String @id @default(cuid())
-    title String @db.VarChar(255)
-    isDone Boolean @default(false)
-    createdAt DateTime @default(now())
-    categoryId String
-    category Category[]
+  id          String     @id @default(cuid())
+  title       String     @db.VarChar(255)
+  isDone      Boolean    @default(false)
+  createdAt   DateTime   @default(now())
+  categoryId  String
+  category    Category   @relation(fields: [categoryId], references: [id],onDelete: Cascade)
 
-    @@index([categoryId])
+  @@index([categoryId])
 }
 
 model Category {
-  id String @id @default(cuid())
-  title String @db.VarChar(255)
-  createdAt DateTime @default(now())
-  todo Todo[]
-
+  id        String     @id @default(cuid())
+  title     String     @db.VarChar(255)
+  createdAt DateTime   @default(now())
+  todo      Todo[]
 }
+
+
+

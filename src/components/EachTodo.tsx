@@ -110,7 +110,7 @@ const EachTodo = ({ todo }: TodoProps) => {
                   <input
                     type="checkbox"
                     className="outline-none"
-                    checked={isDone}
+                    defaultChecked={isDone}
                     onClick={() => {
                       checkTodo({
                         id,
@@ -127,7 +127,7 @@ const EachTodo = ({ todo }: TodoProps) => {
                     }}
                     className={`${
                       updateLoading ? "text-gray-500" : ""
-                    } relative after:absolute after:left-0 after:top-[50%] after:h-[3px] after:duration-300 ${
+                    } relative after:absolute after:left-0 after:top-[50%] after:h-[3px] ${
                       isDone ? "text-stone-400 after:w-full" : "after:w-0"
                     }  overflow-hidden overflow-ellipsis text-lg after:bg-blue-500 after:transition-all after:content-[""] `}
                   >

@@ -19,8 +19,6 @@ const CategoryPage = () => {
 
   const { data: todos } = api.todo.filteredTodo.useQuery(catId);
 
-  console.log(todos);
-
   return (
     <Layout>
       <div className="relative">
