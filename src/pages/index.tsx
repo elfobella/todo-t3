@@ -1,6 +1,6 @@
 import { type NextPage } from "next";
 import Head from "next/head";
-import Todo from "y/pages/components/Todo";
+import Todo from "y/components/Todo";
 import Layout from "./Layout";
 
 const Home: NextPage = () => {
