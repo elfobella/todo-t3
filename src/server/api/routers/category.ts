@@ -26,14 +26,19 @@ export const categoryRouter = createTRPCRouter({
     }),
 
   createTodo: publicProcedure
-    .input(z.object({ title: z.string().min(1), categoryId: z.string() }))
-    .mutation(async ({ ctx, input: { categoryId, title } }) => {
+    .input(
+      z.object({
+        title: z.string().min(1),
+        category: z.object({ id: z.string() }),
+      })
+    )
+    .mutation(async ({ ctx, input: { category, title } }) => {
       return await ctx.prisma.todo.create({
         data: {
-          title,
+          title: title,
           category: {
             connect: {
-              id: categoryId,
+              id: category.id,
             },
           },
         },
