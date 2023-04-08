@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { MdArrowUpward } from "react-icons/md";
 import { api } from "y/utils/api";
 import Layout from "../Layout";
-import CategoryTodo from "y/components/CategoryTodo";
+import CategoryTodo from "../CategoryTodo";
 
 const CategoryPage = () => {
   const router = useRouter();
