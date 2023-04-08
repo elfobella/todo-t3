@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { MdArrowUpward } from "react-icons/md";
 import { api } from "y/utils/api";
 import Layout from "../Layout";
-import CategoryTodo from "../CategoryTodo";
 
 const CategoryPage = () => {
   const router = useRouter();
@@ -40,7 +39,9 @@ const CategoryPage = () => {
         <div className=" crollbar mt-4 flex h-[80%] max-h-[450px] w-[420px] flex-1 flex-col overflow-y-scroll rounded-t-lg bg-gray-800 p-4 text-stone-200 scrollbar-thin scrollbar-track-gray-800 scrollbar-thumb-gray-600 dark:bg-gray-700  dark:scrollbar-track-gray-700">
           <div>
             {todos?.map((todo) => (
-              <CategoryTodo key={todo.id} todo={todo} />
+              <div key={todo.id}>
+                <span>{todo.title}</span>
+              </div>
             ))}
           </div>
         </div>
