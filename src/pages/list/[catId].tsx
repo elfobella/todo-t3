@@ -47,8 +47,12 @@ const CategoryPage = () => {
   return (
     <Layout>
       <div className=" flex flex-col">
-        <p className="text-lg font-semibold">{singleCat?.title}</p>
-        <div className=" crollbar mt-4 flex h-[80%] max-h-[450px] w-[420px] flex-1 flex-col overflow-y-scroll rounded-t-lg bg-gray-800 p-4 text-stone-200 scrollbar-thin scrollbar-track-gray-800 scrollbar-thumb-gray-600 dark:bg-gray-700  dark:scrollbar-track-gray-700">
+        <div className="flex">
+          <p className="rounded-lg bg-gray-800 px-7 py-3 text-lg font-semibold text-stone-200">
+            {singleCat?.title}
+          </p>
+        </div>
+        <div className=" crollbar mt-4 flex max-h-[450px] min-h-[450px] min-w-[400px] max-w-[420px] flex-1 flex-col overflow-y-scroll rounded-t-lg bg-gray-800 p-4 text-stone-200 scrollbar-thin scrollbar-track-gray-800 scrollbar-thumb-gray-600 dark:bg-gray-700  dark:scrollbar-track-gray-700">
           <div>
             {todos?.map((todo) => (
               <div
