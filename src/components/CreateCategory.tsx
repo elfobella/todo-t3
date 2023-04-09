@@ -24,13 +24,12 @@ const CreateCategory = () => {
   //   }, []);
 
   return (
-    <div className="w-[280px]">
+    <div className="">
       <button
         onClick={handleClick}
-        className="my-7 flex w-full items-center justify-center space-x-1 rounded bg-gray-800 px-4 py-2 font-semibold text-stone-200 transition hover:bg-gray-800/90 dark:bg-stone-200  dark:text-gray-900 dark:hover:bg-stone-200/80"
+        className="my-7 flex items-center justify-center space-x-1 rounded-full bg-gray-800 p-4 font-semibold text-stone-200 transition hover:bg-gray-800/90 dark:bg-stone-200  dark:text-gray-900 dark:hover:bg-stone-200/80"
       >
-        <span>Create Category</span>
-        <BsPlus />
+        <BsPlus className="h-7 w-7" />
       </button>
       {isOpen && (
         <div className={`my-4 flex space-x-1  transition duration-300`}>

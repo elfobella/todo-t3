@@ -46,17 +46,17 @@ const CategoryPage = () => {
 
   return (
     <Layout>
-      <div className=" flex flex-col">
+      <div className="flex w-full flex-col ">
         <div className="flex">
           <p className="rounded-lg bg-gray-800 px-7 py-3 text-lg font-semibold text-stone-200">
             {singleCat?.title}
           </p>
         </div>
-        <div className=" crollbar mt-4 flex max-h-[450px] min-h-[450px] min-w-[400px] max-w-[420px] flex-1 flex-col overflow-y-scroll rounded-t-lg bg-gray-800 p-4 text-stone-200 scrollbar-thin scrollbar-track-gray-800 scrollbar-thumb-gray-600 dark:bg-gray-700  dark:scrollbar-track-gray-700">
+        <div className="mt-4 flex h-[250px] flex-col flex-wrap overflow-y-scroll rounded-t-lg bg-gray-800 p-4 text-stone-200 scrollbar scrollbar-thin scrollbar-track-gray-800 scrollbar-thumb-gray-600 dark:bg-gray-700 dark:scrollbar-track-gray-700  md:h-[400px]">
           <div>
             {todos?.map((todo) => (
               <div
-                className="group relative flex items-center space-x-2 rounded p-2 hover:bg-gray-600"
+                className="group flex w-full items-center space-x-2 rounded p-2 hover:bg-gray-600"
                 key={todo.id}
               >
                 <input

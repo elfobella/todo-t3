@@ -7,7 +7,7 @@ const CategoryList = () => {
   const { data: category } = api.category.getAll.useQuery();
 
   return (
-    <div>
+    <div className="w-full">
       <Link className="" href={`/`}>
         <div className="group flex cursor-pointer items-center rounded px-4 py-2 hover:bg-gray-300 dark:hover:bg-gray-700">
           <span className="flex-1">My Day</span>

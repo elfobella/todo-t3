@@ -28,7 +28,7 @@ const Category = ({ category }: CategoryProps) => {
             e.stopPropagation();
             deleteCategory(id);
           }}
-          className="hidden rounded-full p-1 transition hover:bg-gray-500/70 group-hover:inline-block"
+          className="hidden rounded-full p-1 transition group-hover:inline-block hover:bg-gray-500/70"
         >
           <MdDelete className="text-red-500" />
         </button>
